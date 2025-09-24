@@ -10,6 +10,7 @@ import Deweloper from '../../components/deweloper/Deweloper'
 import Contact from '../../components/contact/Contact'
 import Footer from '../../components/footer/Footer'
 import AboutUs from '../../components/aboutUs/AboutUs'
+import Cta from '../../components/cta/Cta'
 
 const HomePage = () => {
   return (
@@ -19,6 +20,7 @@ const HomePage = () => {
       <AboutUs />
       <Features />
       <Apartaments />
+      <Cta />
       <Localization />
       <Map />
       <Gallery />

@@ -1,23 +1,40 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import KRJ_3___001 from '../../assets/images/KRJ_3___001.png'
-import KRJ_3___003 from '../../assets/images/KRJ_3___003.png'
-import KRJ_M1_ANTRESOLA from '../../assets/images/KRJ_M1_ANTRESOLA.png'
-import KRJ_M1_PARTER1 from '../../assets/images/KRJ_M1_PARTER1.png'
-import KRJ_M1_POZIOM_1_B from '../../assets/images/KRJ_M1_POZIOM_1_B.png'
-import KRJ_M1_POZIOM_1 from '../../assets/images/KRJ_M1_POZIOM_1.png'
-import KRJ_NOCNE__002 from '../../assets/images/KRJ_NOCNE__002.png'
-
+import image1 from '../../assets/images/1.png'
+import image2 from '../../assets/images/2.png'
+import image3 from '../../assets/images/3.png'
+import image4 from '../../assets/images/4.png'
+import image5 from '../../assets/images/5.png'
+import image6 from '../../assets/images/6.png'
+import image7 from '../../assets/images/7.png'
+import image8 from '../../assets/images/8.png'
+import image9 from '../../assets/images/9.png'
+import image10 from '../../assets/images/10.png'
+import image11 from '../../assets/images/11.png'
+import image12 from '../../assets/images/12.png'
+import image13 from '../../assets/images/13.png'
+import image15 from '../../assets/images/15.png'
+import image16 from '../../assets/images/16.png'
+import image17 from '../../assets/images/17.png'
 
 const images = [
-  KRJ_M1_ANTRESOLA,
-  KRJ_M1_PARTER1,
-  KRJ_M1_POZIOM_1_B,
-  KRJ_M1_POZIOM_1,
-  KRJ_NOCNE__002,
-  KRJ_3___001,
-  KRJ_3___003,
+  image15,
+  image13,
+  image12,
+  image16,
+  image17,
+  image2,
+  image3,
+  image4,
+  image1,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+  image10,
+  image11,
 ];
 
 function PhotoGallery() {
@@ -26,8 +43,8 @@ function PhotoGallery() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [dragged, setDragged] = useState(false);
   const [calcWidth, setCalcWith] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(null);
 
-  // Obliczenie szerokości do przesuwania
   useEffect(() => {
     const updateWidth = () => {
       if (carouselRef.current) {
@@ -37,74 +54,116 @@ function PhotoGallery() {
       }
     };
 
-    updateWidth(); // Wywołanie funkcji na start
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
 
-    window.addEventListener("resize", updateWidth); // Aktualizacja przy zmianie rozmiaru okna
-
-    return () => window.removeEventListener("resize", updateWidth); // Czyszczenie listenera
+    return () => window.removeEventListener("resize", updateWidth);
   }, [calcWidth]);
 
-  // Funkcja obsługująca kliknięcie
-  const handleImageClick = (src) => {
+  const handleImageClick = (index) => {
     if (!dragged) {
-      setSelectedImage(src);
+      setCurrentIndex(index);
+      setSelectedImage(images[index]);
     }
   };
 
-  return (
-    <div className="py-24">
-      <div className="container max-w-[1596px] mx-auto px-6">
-        <h2 className="font-poppins text-[#856F5B] text-[65px] font-extralight max-w-[537px] mb-24">Galeria</h2>
-      </div>
-      <div className="overflow-hidden w-full px-4">
-        {/* Główny kontener karuzeli */}
-        <motion.div
-          ref={carouselRef}
-          className="flex cursor-grab active:cursor-grabbing"
-          drag="x"
-          dragConstraints={{ right: 0, left: -width }}
-          onDragStart={() => setDragged(true)} // Ustawienie flagi na true podczas przeciągania
-          onDragEnd={() => setDragged(false)} // Resetowanie flagi po zakończeniu przeciągania
-          onMouseEnter={() => { setCalcWith(!calcWidth) }}
-        >
-          {images.map((src, index) => (
-            <motion.div
-              key={index}
-              className="min-w-[300px] md:min-w-[550px] mr-4 "
-              onClick={() => !dragged && handleImageClick(src)} // Kliknięcie tylko jeśli nie było drag
-            >
-              <img
-                src={src}
-                alt={`Slide ${index + 1}`}
-                className="w-full h-auto pointer-events-none"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+  const handleNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex < images.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setSelectedImage(images[currentIndex + 1]);
+    }
+  };
 
-        {/* Powiększone zdjęcie */}
-        <AnimatePresence>
-          {selectedImage && (
-            <motion.div
-              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedImage(null)} // Zamknięcie zdjęcia po kliknięciu
-            >
-              <motion.img
-                src={selectedImage}
-                alt="Enlarged"
-                className="rounded-lg shadow-2xl w-[90%] h-auto max-w-4xl"
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.5 }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setSelectedImage(images[currentIndex - 1]);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedImage) return;
+
+      if (e.key === "ArrowRight") {
+        handleNext(e);
+      } else if (e.key === "ArrowLeft") {
+        handlePrev(e);
+      } else if (e.key === "Escape") {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage, currentIndex, images]);
+
+  return (
+    <section id="galeria">
+      <div className="py-12 md:py-24">
+        <div className="container max-w-[1596px] mx-auto px-6">
+          <h2 className="font-poppins text-[#856F5B] text-4xl md:text-5xl lg:text-[65px] font-extralight mb-12 md:mb-24">Galeria</h2>
+        </div>
+        <div className="overflow-hidden w-full px-4 relative">
+          <motion.div
+            ref={carouselRef}
+            className="flex cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ right: 0, left: -width }}
+            onDragStart={() => setDragged(true)}
+            onDragEnd={() => setDragged(false)}
+            onMouseEnter={() => setCalcWith(!calcWidth)}
+          >
+            {images.map((src, index) => (
+              <motion.div
+                key={index}
+                className="min-w-[300px] md:min-w-[550px] mr-4"
+                onClick={() => !dragged && handleImageClick(index)}
+              >
+                <img
+                  src={src}
+                  alt={`Slide ${index + 1}`}
+                  className="w-full h-auto pointer-events-none"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <AnimatePresence>
+            {selectedImage && (
+              <motion.div
+                className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedImage(null)}
+              >
+                <button onClick={handlePrev} className="text-white text-3xl p-0 md:px-4"><svg className="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m15 19-7-7 7-7" />
+                </svg>
+                </button>
+                <motion.img
+                  src={selectedImage}
+                  alt="Enlarged"
+                  className="rounded-lg shadow-2xl w-[80%] h-auto max-w-4xl"
+                  initial={{ scale: 0.5 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.5 }}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <button onClick={handleNext} className="text-white text-3xl p-0 md:px-4"><svg className="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="m9 5 7 7-7 7" />
+                </svg>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
