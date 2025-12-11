@@ -59,7 +59,9 @@ const Apartaments = () => {
           price: getLatestPrice(item.history_price, item.krj_price),
           history_price: item.history_price || [],
           status: item.krj_status,
-          images: item.krj_apartmentPlan?.map(img => `${Config.base.url}${Config.cms.rootDir}${Config.cms.mediaDir}${img.path}`) || [],
+          images: (item.krj_apartmentPlan || [])
+            .filter(img => img && img.path)
+            .map(img => `${Config.base.url}${Config.cms.rootDir}${Config.cms.mediaDir}${img.path}`),
         }));
         setApartamentsData(apartments);
       })
@@ -118,9 +120,11 @@ const Apartaments = () => {
             </div>
           </div>
           <div className="grid-cols-12">
-            <div className="flex flex-row gap-4 items-center justify-end text-center mx-auto pb-12 md:pb-16">
+            <div className="flex flex-row gap-4 items-center justify-end text-center mx-auto pb-12">
               <Link to={'/historia-cen'} className='font-poppins font-extralight text-[16px] text-[#696969] underline hover:no-underline'>Historia cen</Link>
             </div>
+            <p className='text-center text-slate-800 font-poppins font-light pb-6 md:pb-[32px]'>W prezentowanej cenie każdego mieszkania/segmentu uwzględniono miejsce do wyłącznego korzystania, wydzielone z części wspólnej, o powierzchni 12,5 m².</p>
+            <p className='text-center text-slate-800 font-poppins font-light pb-12 md:pb-16'>Klient przy zakupie ponosi 50% kosztów notarialnych i opłat sądowych, gdy zawierana jest umowa deweloperska, a 100% tych kosztów w przypadku umowy przedwstępnej i/lub umowy przenoszącej własność.​</p>
           </div>
         </div>
       </div>

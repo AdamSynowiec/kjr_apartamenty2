@@ -22,7 +22,7 @@ const FloatingLabelInput = ({ id, label, type = "text", isTextarea = false, valu
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(value !== "")}
-          className="font-poppins font-extralight w-full border-b border-[#C2A992] bg-transparent outline-none py-3 px-1 text-white h-32"
+          className="font-poppins font-light w-full border-b border-[#C2A992] bg-transparent outline-none py-3 px-1 text-white h-32"
         />
       ) : (
         <input
@@ -32,7 +32,7 @@ const FloatingLabelInput = ({ id, label, type = "text", isTextarea = false, valu
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(value !== "")}
-          className="font-poppins font-extralight w-full border-b border-[#C2A992] bg-transparent outline-none py-3 px-1 text-white"
+          className="font-poppins font-light w-full border-b border-[#C2A992] bg-transparent outline-none py-3 px-1 text-white"
         />
       )}
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -108,23 +108,24 @@ const Contact = () => {
         <div className="container max-w-[1596px] mx-auto md:px-6">
           <div className="grid grid-cols-12">
             <div className="col-span-12 md:col-span-6 lg:col-span-3 bg-[#FAF2E9] flex justify-between flex-col p-6 md:py-24">
-              <h2 className="font-poppins text-[#C2A992] text-3xl sm:text-4xl md:text-5xl lg:text-[65px] font-extralight mb-6">
+              <h2 className="font-poppins text-[#C2A992] text-3xl sm:text-4xl md:text-5xl lg:text-[65px] font-light mb-6">
                 Kontakt
               </h2>
               <div>
                 <h4 className="font-poppins font-light mb-4 text-[#856F5B]">Dane firmowe</h4>
-                <ul className="font-poppins font-extralight mb-10">
+                <ul className="font-poppins font-light text-[#3d3d3d] mb-10">
                   <li>KRJ 3 DEVELOPMENT SP. Z O.O.</li>
                   <li>ul. Koło Strzelnicy 2/2</li>
                   <li>30-219 Kraków</li>
                 </ul>
-                <ul className="font-poppins font-extralight mb-10">
-                  <li>KRS - 0001106614</li>
-                  <li>NIP - 6772510738</li>
-                  <li>REGON - 528676390</li>
+                <ul className="font-poppins font-light text-[#3d3d3d] mb-10">
+                  <li>KRS: 0001106614</li>
+                  <li>NIP: 6772510738</li>
+                  <li>REGON: 528676390</li>
                 </ul>
-                <ul className="font-poppins font-extralight mb-10">
-                  <li>Tel: - 518 451 555</li>
+                <ul className="font-poppins font-light text-[#3d3d3d] mb-10">
+                  <li>E-mail: sprzedaz@krj307-2.pl</li>
+                  <li>Tel: (+48) 518 451 555</li>
                 </ul>
               </div>
               <div className="hidden md:flex items-center pt-6">
@@ -134,7 +135,7 @@ const Contact = () => {
               </div>
             </div>
             <div className="col-span-12 md:col-span-6 lg:col-span-9 bg-[#292929] flex flex-col p-6 md:py-24 md:pl-24">
-              <h2 className="font-poppins text-white text-3xl sm:text-4xl md:text-5xl lg:text-[65px] font-extralight mb-6">
+              <h2 className="font-poppins text-white text-3xl sm:text-4xl md:text-5xl lg:text-[65px] font-light mb-6">
                 Napisz do nas
               </h2>
               <form onSubmit={handleSubmit} className="w-full md:w-2/3">

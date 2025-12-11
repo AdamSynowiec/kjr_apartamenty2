@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import image3 from '../../assets/images/3.png'
+import image3 from '../../assets/images/1.png'
 
 const Cta = () => {
     return (
